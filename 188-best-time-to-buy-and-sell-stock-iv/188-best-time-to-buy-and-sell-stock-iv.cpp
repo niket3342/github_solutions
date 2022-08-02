@@ -10,7 +10,7 @@ public:
             return dp[ind][tranNo] = max(-prices[ind] + f(ind+1, tranNo+1, prices,n,k,dp),
                                         0+f(ind+1,tranNo, prices,n,k,dp));            
         }
-        return max(prices[ind] +f(ind+1, tranNo+1,prices,n,k,dp),
+        return dp[ind][tranNo] = max(prices[ind] +f(ind+1, tranNo+1,prices,n,k,dp),
                   0+f(ind+1,tranNo,prices,n,k,dp));
         
     }
