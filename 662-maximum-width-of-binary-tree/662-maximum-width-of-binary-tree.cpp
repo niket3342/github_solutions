@@ -34,7 +34,7 @@ public:
                 if(temp->right) q.push({temp->right,2*cur_id+2});
                 
             }
-            ans = max(ans, rightMost - leftMost +1);
+            ans = max(ans, rightMost - leftMost +1);//width = rightMost - leftMost +1
         }
         return ans;
     }
