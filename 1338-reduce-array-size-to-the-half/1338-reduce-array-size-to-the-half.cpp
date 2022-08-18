@@ -5,7 +5,7 @@ public:
         unordered_map<int, int> m;
         for(int x:arr) ++m[x];
         vector<int> freq;
-        for(auto[_, f]: m) freq.push_back(f);
+        for(auto[_, f]: m) freq.push_back(f);//this will split the iterator into two, the first one will point to arr element and second one will point to its frequency 
         sort(freq.begin(), freq.end());
         
         int ans = 0, removed = 0, half = arr.size()/2, i = freq.size()-1;
