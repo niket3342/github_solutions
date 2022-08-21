@@ -1,33 +1,66 @@
 class Solution {
 public:
-    vector<int> movesToStamp(string stamp, string target) {
-        
-        
-        vector<int> res;
-        auto total_stamp = 0, turn_stamp = -1;
-        while(turn_stamp){ // will run until and unless there is some replacement in the target. 
-            turn_stamp = 0; // initalize to zero to insure there is some changes in the iteration or it will go // to  infinite loop
-            for(int sz = stamp.size(); sz>0; --sz){ // sz insure how much lenght of stamp we go for and rest will // replaced with '?'.
-                for(auto i =0;i<=stamp.size()-sz;i++){ // for iterating over all the position of the stamp.
-                    auto new_stamp = string(i, '?') + stamp.substr(i, sz) + string(stamp.size() - sz - i, '?');
-                    // new_stamp is creating new stamp with some portion with '?' and some portion actual target 
-                    // characters.
-                    auto pos = target.find(new_stamp); // find the specific sequence in whole string.
-                    while(pos != string::npos){ // while loop ensure whole matching subsequence convert to '?'.
-                        res.push_back(pos); // storing the initial position as need to return;
-                        turn_stamp += sz;
-                        fill(begin(target) + pos, begin(target) + pos + stamp.size() , '?'); // converting 
-                        // character to '?' of target.
-                        pos = target.find(new_stamp); // finding next substring in target.
-                    }
-                }
-                
+    
+    //TIME COMPLEXITY = O(n^2)
+    
+    //get the index of the string as the answer
+    int check(string &str, string stamp)
+    {
+        int n = str.length();
+        for(int i=0;i<n;i++)
+        {
+            int j=0, tmp = i;
+            bool boo = false;
+            
+            //iterate upto samps length and check if we have a stamping possible?
+            while(j<stamp.length() and tmp < n && (str[tmp]=='*' || str[tmp] == stamp[j]))
+            {
+                //if there is a stamping,  boo = true
+                if(str[tmp] == stamp[j]) boo = true;
+                //increment temp and j each time
+                tmp++;
+                j++;
             }
-            total_stamp += turn_stamp; // storing count which insure that how much characters are replaced.
+            
+            //if there exists any valid index where we can do stamping
+            if(j==stamp.length() && boo)
+            {
+                //change the string str
+                for(int k=0;k<stamp.length();k++)
+                    str[i+k]='*';
+                
+                //return index
+                return i;
+            }
         }
-        reverse(begin(res), end(res)); 
-        return total_stamp == target.size() ? res : vector<int>(); //checking if the all the characters are 
-        // convered to '?'
+        return n;
+    }
+    
+    vector<int> movesToStamp(string stamp, string target) 
+    {
+        vector<int> ans,result;
+        string str = target;
+        string ff(target.length(),'*');
+        
+        //iterate till we haven't have str containing only '*'
+        while(str != ff)
+        {
+            //check if still we need to do stamping?
+            int value = check(str, stamp);
+            //if done return result
+            if(value == str.length())
+                return result;
+            
+            ans.push_back(value);
+        }
+        
+        //reverse the answer to store it in result finally
+        for(int i=ans.size()-1;i>=0;i--)
+            result.push_back(ans[i]);
+        
+        return result;
+        
+        
         
     }
 };
