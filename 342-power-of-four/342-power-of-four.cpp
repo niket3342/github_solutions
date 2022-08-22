@@ -1,14 +1,9 @@
 class Solution {
 public:
     bool isPowerOfFour(int num) {
-        //BIT MANIPULATION
-        if(num<0)return false;
-        int no_of_one = 0,pos = 1,ones_pos = 0;
-        while(num){
-            if(num&1)no_of_one+=1,ones_pos = pos;
-            num>>=1,pos+=1;
-        }
-        return no_of_one==1&&ones_pos&1;
-        
+        //smart work
+	if(num<0)return false;
+        for(int i=0;i<32;i+=2)if(num==1<<i)return true;
+        return false;
     }
 };
