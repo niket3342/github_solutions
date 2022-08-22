@@ -1,12 +1,14 @@
 class Solution {
 public:
     bool isPowerOfFour(int num) {
-        
-        //here we check if the num is a power of 2 as any no. which is power of 4 must be a power of 2
-        //by (num & (num - 1)) == 0
-        //and we check if he num, is dividivle by 3 and gives remainder 0
-        
-        return num > 0 && (num & (num - 1)) == 0 && (num - 1) % 3 == 0;
+        //BIT MANIPULATION
+        if(num<0)return false;
+        int no_of_one = 0,pos = 1,ones_pos = 0;
+        while(num){
+            if(num&1)no_of_one+=1,ones_pos = pos;
+            num>>=1,pos+=1;
+        }
+        return no_of_one==1&&ones_pos&1;
         
     }
 };
