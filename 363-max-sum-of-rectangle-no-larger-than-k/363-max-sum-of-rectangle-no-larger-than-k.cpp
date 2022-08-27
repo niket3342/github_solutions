@@ -1,29 +1,32 @@
 class Solution {
 public:
     int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {
-         if (matrix.empty()) return 0;
-    int row = matrix.size(), col = matrix[0].size(), res = INT_MIN;
-    for (int l = 0; l < col; ++l) {
-        vector<int> sums(row, 0);
-        for (int r = l; r < col; ++r) {
-            for (int i = 0; i < row; ++i) {
-                sums[i] += matrix[i][r];
-            }
+        int res = INT_MIN, rows = matrix.size(), cols = matrix[0].size();
+        for(int l=0;l<cols;l++)
+        {
+            vector<int> sums(rows);
             
-            // Find the max subarray no more than K 
-            set<int> accuSet;
-            accuSet.insert(0);
-            int curSum = 0, curMax = INT_MIN;
-            for (int sum : sums) {
-                curSum += sum;
-                set<int>::iterator it = accuSet.lower_bound(curSum - k);
-                if (it != accuSet.end()) curMax = std::max(curMax, curSum - *it);
-                accuSet.insert(curSum);
-            }
-            res = std::max(res, curMax);
+                for(int r=l;r<cols;r++)
+                {
+                    for(int i=0;i<rows;i++)
+                    {
+                        sums[i]+= matrix[i][r];
+                    }
+                    set<int> s={0};
+                    int run_sum = 0;
+                    for(int sum:sums)
+                    {
+                        run_sum += sum;
+                        auto it = s.lower_bound(run_sum-k);
+                        if(it != end(s))
+                            res = max(res, run_sum - *it);
+                        s.insert(run_sum);
+                    }
+                
+                }
         }
-    }
-    return res;
+        return res;
+        
         
     }
 };
