@@ -1,7 +1,7 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        //This approach use extra space so  not acceptable
+        //this code is acceptable as it meets all conditions
         int slow = nums[0];
         int fast = nums[0];
         
