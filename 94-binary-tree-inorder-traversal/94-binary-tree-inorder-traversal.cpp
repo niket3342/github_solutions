@@ -17,6 +17,7 @@ public:
         TreeNode* node = root;
         while(true)
         {
+            
             if(node != NULL)
             {
                 st.push(node);
@@ -30,7 +31,6 @@ public:
                 inorder.push_back(node->val);
                 node= node->right;
             }
-            
         }
         return inorder;
         
