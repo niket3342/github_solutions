@@ -11,23 +11,16 @@
 class Solution {
 public:
     ListNode* middleNode(ListNode* head) {
-        //NAIVE APPROACH
-        int count = 0;
-        ListNode* temp = head;
-        
-        while(temp)
+        //EFFICIENT APPROACH - TORTOISE AND HARE APPROACH
+        ListNode* slow=head;
+        ListNode* fast = head;
+        while(fast && fast->next)
         {
-            count++;
-            temp = temp->next;
+            slow = slow->next;
+            fast = fast->next->next;
         }
+        return slow;
         
-        temp = head;
-        
-        for(int i=0; i<count/2;i++)
-        {
-            temp = temp->next;
-        }
-        return temp;
         
     }
 };
