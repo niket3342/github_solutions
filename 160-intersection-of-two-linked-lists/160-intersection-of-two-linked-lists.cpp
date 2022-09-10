@@ -8,17 +8,30 @@
  */
 class Solution {
 public:
-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        //BRUTE FORCE APPROACH -- Comparing the nodes
-        while(headB != NULL) {
-        ListNode* temp = headA;
-        while(temp != NULL) {
-            //if both nodes are same
-            if(temp == headB) return headB;
-            temp = temp->next;
+    int getDifference(ListNode* headA,ListNode* headB) {
+     int len1 = 0,len2 = 0;
+        while(headA != NULL || headB != NULL) {
+            if(headA != NULL) {
+                ++len1; headA = headA->next;
+            }
+            if(headB != NULL) {
+                ++len2; headB = headB->next;
+            }
+            
         }
-        headB = headB->next;
-    }
-    return NULL;
+        return len1-len2;//if difference is neg-> length of list2 > length of list1 else vice-versa
+}
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        //DIFFERENCE OF LENGTHS APPROACH
+        int diff = getDifference(headA,headB);
+        if(diff < 0) 
+            while(diff++ != 0) headB = headB->next; 
+        else while(diff-- != 0) headA = headA->next;
+        while(headA != NULL) {
+            if(headA == headB) return headA;
+            headB = headB->next;
+            headA = headA->next;
+        }
+        return headA;
     }
 };
