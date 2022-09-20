@@ -1,21 +1,16 @@
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        //APPROACH USING SET DATA STRUCTURE
+        //APPROACH USING TWO POINTERS
         
-    set<int> s;
-        for(int i=0;i<nums.size();i++)
+    int i=0;
+        for(int j=1;j<nums.size();j++)
         {
-            s.insert(nums[i]);
-            
+            if(nums[i] != nums[j])
+                i++;
+            nums[i]= nums[j];
         }
-        int k = s.size();
-        int j=0;
-        for(int x:s)
-        {
-            nums[j++] = x;
-        }
-        return k;
+        return i+1;
         
     }
 };
